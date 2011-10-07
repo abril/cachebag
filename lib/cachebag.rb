@@ -6,14 +6,7 @@ require "bundler/setup"
 # require other dependencies here...
 
 # Gem requirements
-# Your can require or autoload gem files here, see examples below
-# require "gem_name/file"
-# module GemName
-  # autoload :AClass      , "migrator/a_class"
-  # autoload :AnotherClass, "migrator/another_class"
-# end
-
+require "cachebag/store"
 module CacheBag
   autoload :VERSION, 'cachebag/version'
 end
-

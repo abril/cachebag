@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
-describe CacheBag do
+describe CacheBag::Store do
   before do
-    # setup
+    @store = CacheBag::Store.new
   end
   
-  it "should be something" do
+  it "should have some tests here" do
     assert true
   end
 end
