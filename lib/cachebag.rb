@@ -14,6 +14,6 @@ require "bundler/setup"
 # end
 
 module CacheBag
-
+  autoload :VERSION, 'cachebag/version'
 end
 
