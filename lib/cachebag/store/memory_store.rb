@@ -5,13 +5,9 @@ module CacheBag
       @data = {}
     end
     
-    def write(key, headers = {}, body = nil)
+    def write(key, headers, body)
       super
-      @data[hash_key(key)] = {
-                                :headers => headers,
-                                :body => nil,
-                                :url => key
-                             }
+      @data[hash_key(key)] = HttpEntry.new(key, headers, body)
     end
     
     def read(key)

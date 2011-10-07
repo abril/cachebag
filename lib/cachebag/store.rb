@@ -4,7 +4,7 @@ module CacheBag
   autoload :MemoryStore, "cachebag/store/memory_store"
   
   class Store    
-    def write(key, headers = {}, body = nil)
+    def write(key, headers, body)
     end
     
     def read(key)
