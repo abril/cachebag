@@ -1,14 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
-class CacheBag::XXXTest < Test::Unit::TestCase
-
-  def setup
-    # setup here
+describe CacheBag do
+  before do
+    # setup
   end
-
-  def test_something
+  
+  it "should be something" do
     assert true
   end
-
 end
-
