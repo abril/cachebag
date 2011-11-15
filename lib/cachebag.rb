@@ -9,6 +9,7 @@ require "time"
 require "cachebag/base"
 require "cachebag/store"
 require "cachebag/http_entry"
+require "cachebag/cache_control"
 module CacheBag
   autoload :VERSION, 'cachebag/version'
 end
