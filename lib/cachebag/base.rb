@@ -2,7 +2,7 @@ module CacheBag
   class Base
     
     STORES = {
-      :memory_store => :MemoryStore
+      :memory_store => :MemoryStore # as symbol, to avoid unnecessary loads for unused stores
     }
     
     def initialize(options = {})
