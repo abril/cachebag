@@ -66,4 +66,11 @@ describe CacheBag::CacheControl do
     cc.stand_alone_extension?.must_equal(true)
   end
   
+  it "should exposes the directives hash" do
+    cc = CacheBag::CacheControl.new("private, community=\"UCI\", stand-alone-extension")
+    
+    cc.directives.must_be_kind_of(Hash)
+    cc.directives[:community].must_equal("UCI")
+    cc.directives.key?(:private).must_equal(true)
+  end
 end
