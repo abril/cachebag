@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'minitest/spec'
 require 'minitest/autorun'
-require 'ruby-debug'
 require "digest/md5"
 
 def md5(string)
