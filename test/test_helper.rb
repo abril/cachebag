@@ -1,6 +1,6 @@
+require 'rubygems'
 require 'minitest/spec'
 require 'minitest/autorun'
-require 'rubygems'
 require 'ruby-debug'
 require "digest/md5"
 

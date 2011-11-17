@@ -5,11 +5,8 @@ source :rubygems
 # gem "methodize"
 
 # Other dependencies
-gem "ruby-debug-base19", :group => [:development, :test]
-gem "ruby-debug19", :group => [:development, :test]
-
 group :test do
-# put test dependencies here
+  gem "minitest", "~> 2.8.0", :group => [:test] if RUBY_VERSION.start_with?("1.8")
 end
 
 gem "step-up", "~> 0.6.0", :group => [:source]
