@@ -3,6 +3,7 @@ source :rubygems
 # Main dependencies
 # gem "activesupport", "2.3.8", :require => "active_support"
 # gem "methodize"
+gem "rake"
 
 # Other dependencies
 group :test do
