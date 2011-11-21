@@ -53,7 +53,7 @@ module CacheBag
     def method_missing(method, *args)
       method_name = method.to_s
       # to check if a directive exists on value
-      if method_name[-1,1] == '?'
+      if method_name.end_with?("?")
         method_name = method_name.chop.to_sym
         @directives.key?(method_name)
       # to get the value of a directive
@@ -65,23 +65,21 @@ module CacheBag
   private
   
     def parse_directives
-      directives = @value.split(",")
-      directives.each do |d|
-        key, value = d.strip.split("=")
-        key = normalize(key.strip)
-        @directives[key] = convert_value(key, value)
+      @value.scan(/([^,=]+)(?:=\s*(?:\"([^\"]*)\"|\'([^\']*)\'|([^,]*)))?/).each do |key, v1, v2, v3|
+        key = key.strip
+        next if key.length.zero?
+        key = normalize_key(key)
+        value = v1 || v2 || v3
+        @directives[key] = value ? convert_value(key, value.strip) : nil
       end
     end
     
-    def normalize(value)
-      value.downcase.gsub(/-/,"_").to_sym
+    def normalize_key(key)
+      key.downcase.gsub(/-/,"_").to_sym
     end
     
     def convert_value(key, value)
-      if value
-        value = VALUE_INTEGER.include?(key) ? value.strip.to_i : value.strip.gsub(/(\A"|"\z)/,"")
-      end
-      value
+      VALUE_INTEGER.include?(key) ? value.to_i : value
     end
     
   end
