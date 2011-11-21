@@ -1,6 +1,6 @@
 # Cachebag #
 
-[![Build Status](https://secure.travis-ci.org/abril/cachebag.png)](http://travis-ci.org/abril/cachebag])
+[![Build Status](https://secure.travis-ci.org/abril/cachebag.png)](http://travis-ci.org/abril/cachebag)
 
 Local HTTP cache in your REST consumers.
 
