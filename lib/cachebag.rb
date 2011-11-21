@@ -7,6 +7,7 @@ require "bundler/setup"
 require "time"
 
 # Gem requirements
+require "cachebag/rules"
 require "cachebag/base"
 require "cachebag/store"
 require "cachebag/http_entry"

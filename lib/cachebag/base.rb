@@ -1,6 +1,7 @@
 # encoding: UTF-8
 module CacheBag
   class Base
+    include Rules
     
     STORES = {
       :memory_store => :MemoryStore # as symbol, to avoid unnecessary loads for unused stores
