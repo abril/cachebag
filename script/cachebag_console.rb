@@ -1,3 +1,4 @@
+# encoding: UTF-8
 lib = File.expand_path File.join(*%w[.. .. lib]), __FILE__
 $:.unshift lib unless $:.include? lib
 version_file = File.expand_path "../../GEM_VERSION", __FILE__

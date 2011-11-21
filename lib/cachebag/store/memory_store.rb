@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module CacheBag
   class MemoryStore < Store
     def initialize

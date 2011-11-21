@@ -1,3 +1,4 @@
+# encoding: UTF-8
 namespace :gem_name do
   desc 'task description'
   task :utils => :environment do

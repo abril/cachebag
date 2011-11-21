@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
 # Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9 for the spec of Cache-Control header
