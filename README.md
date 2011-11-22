@@ -9,3 +9,4 @@ Local HTTP cache in your REST consumers.
 * Caching in HTTP: http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.4
 * HTTP header definitions: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14
 
+Check the `docs/` folder for more info.
