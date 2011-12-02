@@ -7,6 +7,16 @@ module CacheBag
     
     attr_reader :headers
     
+    TO_DATE = Proc.new { |v| Time.parse(v) }
+    CONVERSIONS = {
+      :age               => Proc.new { |v| v.to_i },
+      :date              => TO_DATE, 
+      :expires           => TO_DATE, 
+      :if_modified_since => TO_DATE,
+      :last_modified     => TO_DATE,
+      :cache_control     => Proc.new { |v| CacheControl.new(v) }
+    }
+    
     def initialize(original_headers)
       @headers = {}
       
@@ -16,10 +26,11 @@ module CacheBag
     end
     
     def []=(field, value)
-      @headers[normalize(field)] = {
-                                      :value => value.strip,
+      normalized_field = normalize(field)
+      @headers[normalized_field] = {
+                                      :value => convert_value(normalized_field, value.strip),
                                       :original_field_name => field
-                                   }      
+                                   }
     end
     
     def method_missing(method, *args)
@@ -43,6 +54,10 @@ module CacheBag
 
     def normalize(field)
       field.to_s.downcase.gsub(/-/,"_").to_sym
+    end
+    
+    def convert_value(field, value)
+      CONVERSIONS.key?(field) ? CONVERSIONS[field].call(value) : value
     end
     
   end

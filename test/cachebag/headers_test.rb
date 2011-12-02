@@ -53,4 +53,26 @@ describe CacheBag::Headers do
     obj.etag!.must_equal("ETag")
     obj.etag.must_equal("8038c7e58223d887251bfefeb4659432fddf9731")
   end
+  
+  it "should return the proper value type for some cache related headers" do
+    now_ts = Time.now
+    now_http = now_ts.httpdate
+    headers = { 
+                "Age"               => "600",                           #integer
+                "Cache-Control"     => "max-age=0,must-revalidate",     #cache control object
+                "Date"              => now_http,                        #Time
+                "Expires"           => now_http,                        #Time
+                "If-Modified-Since" => now_http,                        #Time
+                "Last-Modified"     => now_http                         #Time
+              }
+    obj = CacheBag::Headers.new(headers)
+    
+    obj.age.must_equal(600)
+    obj.cache_control.must_be_kind_of(CacheBag::CacheControl)
+    obj.cache_control.max_age.must_equal(0)
+    obj.date.to_i.must_equal(now_ts.to_i)
+    obj.expires.to_i.must_equal(now_ts.to_i)
+    obj.if_modified_since.to_i.must_equal(now_ts.to_i)
+    obj.last_modified.to_i.must_equal(now_ts.to_i)
+  end
 end

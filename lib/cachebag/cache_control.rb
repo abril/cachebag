@@ -46,7 +46,13 @@ module CacheBag
     
     attr_reader :value, :directives
     
-    VALUE_INTEGER = [:max_age, :min_fresh, :s_maxage, :max_stale]
+    TO_INTEGER = Proc.new { |v| v.to_i }
+    CONVERSIONS = {
+      :max_age    => TO_INTEGER,
+      :min_fresh  => TO_INTEGER, 
+      :s_maxage   => TO_INTEGER, 
+      :max_stale  => TO_INTEGER
+    }
     
     def initialize(header_value)
       @value  = header_value.strip
@@ -83,7 +89,7 @@ module CacheBag
     end
     
     def convert_value(key, value)
-      VALUE_INTEGER.include?(key) ? value.to_i : value
+      CONVERSIONS.key?(key) ? CONVERSIONS[key].call(value) : value
     end
     
   end
