@@ -59,6 +59,10 @@ module CacheBag
       parse_directives(header_value.strip)
     end
 
+    def inspect
+      "#<%s %s>" % [self.class.to_s, value.inspect]
+    end
+
     def value
       directives.map{ |k, v| "%s%s" % [k.to_s.gsub(/_/, "-"), v.nil? ? nil : "=#{v}"]}.join(", ")
     end

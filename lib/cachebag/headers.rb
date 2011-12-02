@@ -25,6 +25,10 @@ module CacheBag
         self[field] = value
       end
     end
+
+    def inspect
+      "#<%s%s>" % [self.class.to_s, headers.map{ |k, v| " #{k}=#{v[:value].inspect}"}.join]
+    end
     
     def []=(field, value)
       normalized_field = normalize(field)
