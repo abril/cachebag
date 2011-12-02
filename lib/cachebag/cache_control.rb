@@ -44,7 +44,7 @@ module CacheBag
       undef_method m unless m.to_s =~ /^method_missing$|^respond_to\?$|^__|object_id|class/ 
     end # not using BasicObject for retro-compatibility
     
-    attr_reader :value, :directives
+    attr_reader :directives
     
     TO_INTEGER = Proc.new { |v| v.to_i }
     CONVERSIONS = {
@@ -55,9 +55,12 @@ module CacheBag
     }
     
     def initialize(header_value)
-      @value  = header_value.strip
       @directives = {}
-      parse_directives
+      parse_directives(header_value.strip)
+    end
+
+    def value
+      directives.map{ |k, v| "%s%s" % [k.to_s.gsub(/_/, "-"), v.nil? ? nil : "=#{v}"]}.join(", ")
     end
     
     def method_missing(method, *args)
@@ -74,8 +77,8 @@ module CacheBag
     
   private
   
-    def parse_directives
-      @value.scan(/([^,=]+)(?:=\s*(?:\"([^\"]*)\"|\'([^\']*)\'|([^,]*)))?/).each do |key, v1, v2, v3|
+    def parse_directives(header_value)
+      header_value.scan(/([^,=]+)(?:=\s*(?:\"([^\"]*)\"|\'([^\']*)\'|([^,]*)))?/).each do |key, v1, v2, v3|
         key = key.strip
         next if key.length.zero?
         key = normalize_key(key)
