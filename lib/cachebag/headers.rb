@@ -1,8 +1,8 @@
 # encoding: UTF-8
 module CacheBag
   class Headers
+    instance_methods.each { |m| undef_method m unless m =~ /^__|object_id/ } # not using BasicObject for retro-compatibility
     attr_reader :headers
-    # TODO make this a cross ruby version blank slate object
     
     def initialize(headers)
       @headers = {}
@@ -16,6 +16,7 @@ module CacheBag
     end
     
     def method_missing(method, *args)
+      # TODO implement a writer method
       method_name = method.to_s
       # to check if a header exists on value
       if method_name.end_with?("?")
