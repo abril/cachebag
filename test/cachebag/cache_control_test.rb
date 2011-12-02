@@ -9,7 +9,7 @@ describe CacheBag::CacheControl do
     cc = CacheBag::CacheControl.new("max-age=600,must-revalidate")
     
     cc.must_be_kind_of(CacheBag::CacheControl)
-    cc.value.must_equal("max-age=600, must-revalidate")
+    cc.value.must_equal(CacheBag::CacheControl.new("must-revalidate, max-age=600").value)
   end
   
   it "should accept empty declarations" do
