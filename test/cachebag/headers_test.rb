@@ -5,14 +5,14 @@ describe CacheBag::Headers do
   
   it "should instantiate a new headers object with a Hash" do
     headers = {}
-    obj = CacheBag::Headers.new(headers)
+    obj     = CacheBag::Headers.new(headers)
     
     obj.must_be_kind_of(CacheBag::Headers)
   end
   
   it "should accept empty headers" do
     headers = {}
-    obj = CacheBag::Headers.new(headers)
+    obj     = CacheBag::Headers.new(headers)
     
     obj.headers.keys.size.must_equal(0)
   end
@@ -42,5 +42,15 @@ describe CacheBag::Headers do
     obj.etag!.must_equal("ETag")
     obj.content_type!.must_equal("Content-Type")
     obj.pragma!.must_be_nil
+  end
+  
+  it "should allow the assignment of a new header" do
+    headers     = {}
+    obj         = CacheBag::Headers.new(headers)
+    obj["ETag"] = "8038c7e58223d887251bfefeb4659432fddf9731"
+    
+    obj.etag?.must_equal(true)
+    obj.etag!.must_equal("ETag")
+    obj.etag.must_equal("8038c7e58223d887251bfefeb4659432fddf9731")
   end
 end

@@ -40,7 +40,10 @@ module CacheBag
   #   cache unrecognized extensions MUST be ignored
   #
   class CacheControl
-    instance_methods.each { |m| undef_method m unless m =~ /^__|object_id/ } # not using BasicObject for retro-compatibility
+    instance_methods.each do |m|
+      undef_method m unless m.to_s =~ /^method_missing$|^respond_to\?$|^__|object_id/ 
+    end # not using BasicObject for retro-compatibility
+    
     attr_reader :value, :directives
     
     VALUE_INTEGER = [:max_age, :min_fresh, :s_maxage, :max_stale]
