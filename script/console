@@ -3,4 +3,15 @@
 irb = RUBY_PLATFORM =~ /(:?mswin|mingw)/ ? 'irb.bat' : 'irb'
 libs = " -r #{File.expand_path("../cachebag_console.rb", __FILE__)}"
 puts "Loading gem development environment..."
-exec "#{irb} #{libs} --simple-prompt #{ARGV.join("")}"
+gemfile = File.expand_path("../../Gemfile", __FILE__)
+system <<-COMMANDS
+    git checkout -- #{gemfile} && \
+    echo 'gem \"ap\"' >> #{gemfile} && \
+    echo 'gem \"looksee\"' >> #{gemfile} && \
+    bundle install --quiet
+COMMANDS
+if $?.exitstatus.zero?
+  exec "bundle exec #{irb} #{libs} --simple-prompt #{ARGV.join("")} && git checkout -- #{gemfile}"
+else
+  puts "erro: #{$?.inspect}"
+end
