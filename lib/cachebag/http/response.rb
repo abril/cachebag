@@ -1,19 +1,27 @@
 # encoding: UTF-8
 module CacheBag
-  class HttpEntry
+  class Response < Http 
     
-    attr_reader :url, :headers, :body
+    attr_accessor :response_time, :request_time
     
-    def initialize(url, headers, body)
-      @url     = url
-      @body    = body
-      @headers = (headers.class == Headers) ? headers : Headers.new(headers)
+    def initialize(url, headers, body, request_time, response_time)
+      super(url, headers, body)
+      
+      @request_time  = request_time
+      @response_time = response_time
       
       add_missing_cache_headers
     end
 
+    # http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.2.3    
     def age
-      0
+      apparent_age           = [0, (@response_time - headers.date)].max
+      corrected_received_age = [apparent_age, (headers.age || 0)].max
+      response_delay         = @response_time - @request_time
+      corrected_initial_age  = corrected_received_age + response_delay
+      resident_time          = self.now - @response_time
+      
+      return (corrected_initial_age + resident_time).to_i
     end
     
     def freshness_lifetime

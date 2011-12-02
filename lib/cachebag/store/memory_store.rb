@@ -8,7 +8,7 @@ module CacheBag
     
     def write(key, headers, body)
       super
-      @data[hash_key(key)] = HttpEntry.new(key, headers, body)
+      @data[hash_key(key)] = Http.new(key, headers, body)
     end
     
     def read(key)

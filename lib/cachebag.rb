@@ -10,7 +10,7 @@ require "time"
 require "cachebag/rules"
 require "cachebag/base"
 require "cachebag/store"
-require "cachebag/http_entry"
+require "cachebag/http"
 require "cachebag/headers"
 require "cachebag/cache_control"
 module CacheBag
