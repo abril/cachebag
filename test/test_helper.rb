@@ -2,6 +2,7 @@
 require 'rubygems'
 require 'minitest/spec'
 require 'minitest/autorun'
+require 'mocha'
 require "digest/md5"
 
 def md5(string)
