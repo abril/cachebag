@@ -2,7 +2,7 @@
 module CacheBag
   class Headers
     instance_methods.each do |m|
-      undef_method m unless m.to_s =~ /^method_missing$|^respond_to\?$|^__|object_id/ 
+      undef_method m unless m.to_s =~ /^method_missing$|^respond_to\?$|^__|object_id|class/ 
     end # not using BasicObject for retro-compatibility
     
     attr_reader :headers
