@@ -11,6 +11,7 @@ require "cachebag/rules"
 require "cachebag/base"
 require "cachebag/store"
 require "cachebag/http_entry"
+require "cachebag/headers"
 require "cachebag/cache_control"
 module CacheBag
   autoload :VERSION, 'cachebag/version'
