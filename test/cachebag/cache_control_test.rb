@@ -74,4 +74,13 @@ describe CacheBag::CacheControl do
     cc.directives[:community].must_equal("UCI")
     cc.directives.key?(:private).must_equal(true)
   end
+  
+  it "should be able to add a directive" do
+    cc = CacheBag::CacheControl.new("private, community=\"UCI\", stand-alone-extension")
+    
+    cc.max_age?.must_equal(false)
+    cc.directives[:max_age] = 800
+    cc.max_age?.must_equal(true)
+    cc.max_age.must_equal(800)
+  end
 end
