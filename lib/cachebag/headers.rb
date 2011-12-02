@@ -18,6 +18,7 @@ module CacheBag
     }
     
     def initialize(original_headers)
+      raise ArgumentError, "The parameter must be a Hash" if original_headers.class != Hash
       @headers = {}
       
       original_headers.each do |field, value|

@@ -10,6 +10,22 @@ describe CacheBag::Headers do
     obj.must_be_kind_of(CacheBag::Headers)
   end
   
+  it "should raise an error if the parameter isn't Hash" do
+    headers = []
+    
+    lambda {
+      obj = CacheBag::Headers.new(headers)
+    }.must_raise(ArgumentError)
+  end
+
+  it "should raise an error if the parameter is the object itself" do
+    headers = CacheBag::Headers.new({})
+    
+    lambda {
+      obj = CacheBag::Headers.new(headers)
+    }.must_raise(ArgumentError)
+  end
+  
   it "should accept empty headers" do
     headers = {}
     obj     = CacheBag::Headers.new(headers)
