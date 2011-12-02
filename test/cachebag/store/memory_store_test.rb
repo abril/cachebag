@@ -10,7 +10,7 @@ describe CacheBag::MemoryStore do
     @memory_store.write("http://www.example.com", {"Content-Type" => "text/html"}, "<p>awesome example</p>")
     
     entry = @memory_store.read("http://www.example.com")
-    entry.headers["Content-Type"].must_equal "text/html"
+    entry.headers.content_type.must_equal "text/html"
     entry.body.must_equal "<p>awesome example</p>"
   end
     
@@ -18,7 +18,7 @@ describe CacheBag::MemoryStore do
     @memory_store.write("http://www.example.com", {"Content-Type" => "text/html"}, "<p>awesome example</p>")
     
     entry = @memory_store.delete("http://www.example.com")
-    entry.headers["Content-Type"].must_equal "text/html"
+    entry.headers.content_type.must_equal "text/html"
     entry.body.must_equal "<p>awesome example</p>"
     
     entry = @memory_store.delete("http://www.example.com")

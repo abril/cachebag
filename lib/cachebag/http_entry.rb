@@ -7,40 +7,38 @@ module CacheBag
     def initialize(url, headers, body)
       @url     = url
       @body    = body
-      @headers = {}
-      %w(Last-Modified Cache-Control ETag Expires Pragma Vary Content-Type).each do |item|
-        @headers[item] = headers[item]
+      @headers = (headers.class == Headers) ? headers : Headers.new(headers)
+      
+      add_missing_cache_headers
+    end
+
+    def age
+      0
+    end
+    
+    def freshness_lifetime
+      if headers.cache_control.max_age? # since we are a local cache, we can ignore s-maxage directive (http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.3)
+        headers.cache_control.max_age
+      elsif headers.expires?
+        headers.expires - headers.date
+      else
+        headers.cache_control.directives[:max_age] = 0
       end
     end
     
-    #TODO verify the need of refresh the headers and its parsed values
-    
-    def last_modified
-      parsed[:last_modified] ||= @headers["Last-Modified"] ? Time.parse(@headers["Last-Modified"]) : nil
+    def fresh?
+      freshness_lifetime > age
     end
     
-    def etag
-      parsed[:etag] ||= @headers["ETag"]
+    def stale?
+      !fresh?
     end
-    
-    def age(date)
-      last_modified ? (date - last_modified).to_i : nil
-    end
-    
-    def cache_control_max_age
-      maxage = @headers["Cache-Control"].split(",").select {|i| i.include?("max-age=") }.first.strip!
-      maxage ? maxage.sub(/max-age=/, "").to_i : nil
-    end
-    
-    def cache_control_public?
-      
-    end
-    
+  
   private
   
-    def parsed
-      @parsed ||= {}
+    def add_missing_cache_headers
+      headers["Cache-Control"] = "" unless headers.cache_control?
     end
-    
+  
   end
 end
